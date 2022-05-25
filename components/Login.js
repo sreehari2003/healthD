@@ -1,44 +1,99 @@
 import React from "react";
 import Image from "next/image";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { authentication } from "../auth/Firebase";
+import { notifyMessage } from "../helper/toast";
+import { useRouter } from "next/router";
+import axios from "axios";
+const Login = ({ URL, tex, route, ima }) => {
+  const google = "https://blog.hubspot.com/hubfs/image8-2.jpg";
 
-const Login = () => {
-  const img =
-    "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387";
+  const POST_URL = URL;
+  const router = useRouter();
+  const rt = tex.includes("Doctor") ? "patient" : "doctor";
+  const nav = tex.includes("Doctor") ? "/" : "doctor";
+  const sendDB = async (obj) => {
+    try {
+      const { data } = await axios.post(POST_URL, obj, {
+        withCredentials: true,
+      });
+      notifyMessage("sign in succesfull");
+      router.push(`/${route}`);
+      if (!data) {
+        throw new Error("COuldnt sign in");
+        // notifyMessage("couldnt sign in");
+      }
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const auth = () => {
+    //fiebase login code
+    const provider = new GoogleAuthProvider();
+
+    const getAuth = async () => {
+      try {
+        const res = await signInWithPopup(authentication, provider);
+        const data = res.user;
+        if (!data) {
+          throw new Error("Couldnt signin");
+        }
+        // console.log(data);
+        const query = {
+          name: data.displayName,
+          email: data.email,
+          image: data.photoURL,
+        };
+        localStorage.setItem("name", data.displayName);
+        localStorage.setItem("email", data.email);
+        sendDB(query);
+      } catch (e) {
+        console.log(e);
+        notifyMessage("Couldn't sign in");
+      }
+    };
+    getAuth();
+  };
 
   return (
     <div className="h-screen bg-white flex overflow-hidden">
-      <div className="w-[50%]">
-        <Image src={img} alt="" height={722} width={765} />
+      <div className="w-[50%] bg-black flex items-center justify-center">
+        <Image
+          src={ima}
+          alt=""
+          height={722}
+          width={600}
+          className="rounded-lg"
+        />
       </div>
       <div className="w-[50%] bg-black flex items-center justify-center">
         <div className="h-[80%] w-[60%] bg-white rounded-xl mb-[15%] flex items-center justify-center    flex-col">
-          <h2 className="text-[35px] font-bold mb-1">Sign Up</h2>
+          <h2 className="text-[35px] font-bold mb-1">{tex}</h2>
           <form className="h-[380px] flex  items-center justify-center">
             <div className="flex flex-col w-[300px] justify-center items-center">
-              <div className=" h-[90px]">
-                <label className="font-medium ">Email address </label>
-                <TextField
-                  id="outlined-basic"
-                  label="jhondoe@gmail.com"
-                  variant="outlined"
-                  className="w-full"
-                />
-              </div>
-              <div className=" h-[90px]">
-                <label className="font-medium ">Password </label>
-                <TextField
-                  id="outlined-basic"
-                  label="password"
-                  variant="outlined"
-                  className="w-full"
-                  type="password"
-                />
-              </div>
-              <Button variant="contained" className="bg-black w-[300px] mt-4">
-                Contained
+              <Image
+                src={google}
+                height={50}
+                width={100}
+                alt="google symbol"
+                className="mb-5"
+              />
+              <Button
+                variant="contained"
+                className="bg-black w-[200px] h-[50px] mt-4"
+                onClick={auth}
+              >
+                Signup with Google
               </Button>
+              <h5
+                className="text-sm underline hover:cursor-pointer mt-3 "
+                onClick={() => router.push(`${nav}`)}
+              >
+                signup as as {rt}
+              </h5>
             </div>
           </form>
         </div>
@@ -46,5 +101,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
