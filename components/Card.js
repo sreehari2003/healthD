@@ -3,12 +3,19 @@ import Image from "next/image";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import styles from "./card.module.scss";
-const Card = () => {
+import { useRouter } from "next/router";
+const Card = ({ data }) => {
+  console.log(data);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 4000);
+  }, []);
   const [loading, setLoading] = useState(true);
   if (loading) {
     return (
       <>
-        <div className="Myflex">
+        <div className="Myflex ">
           <div
             className={`${styles.box} Myflex bg-white`}
             style={{ width: 300 }}
@@ -33,15 +40,6 @@ const Card = () => {
           >
             <CircularProgress disableShrink />
           </div>
-        </div>
-      </>
-    );
-  }
-  if (loading || empty) {
-    return (
-      <>
-        <div className={`flex`} style={{ textAlign: "center" }}>
-          <h2>You dont have any diary to show</h2>
         </div>
       </>
     );
@@ -50,9 +48,9 @@ const Card = () => {
     <>
       {data?.map((el, index) => {
         const dateObj = new Date(el.date);
-        const date = moment(dateObj).format("DD-MMM-YYYY");
+        // const date = moment(dateObj).format("DD-MMM-YYYY");
         return (
-          <div className={styles.box} key={10}>
+          <div className={`${styles.box} bg-black`} key={10}>
             <Image
               src={`https://source.unsplash.com/random/${index * 10}`}
               width={300}
@@ -62,22 +60,17 @@ const Card = () => {
               className={styles.img}
             />
             <div className={styles.box_sub}>
-              <h2>{el.heading}</h2>
-              <h2>{date}</h2>
+              <h2>{el.title}</h2>
+              <h2>{el.date}</h2>
             </div>
             <div className={styles.info}>
               <Button
                 variant="contained"
-                onClick={() => route(el._id)}
+                onClick={() => route("/user/index")}
                 className={styles.btn}
               >
-                Read Diary
+                show Data
               </Button>
-              <Button
-                variant="contained"
-                className={styles.i}
-                onClick={() => deleteDiary(el._id)}
-              ></Button>
             </div>
           </div>
         );
