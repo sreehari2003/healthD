@@ -3,7 +3,7 @@ import MuiCard from "./Card";
 const User = ({ data }) => {
   return (
     <div className=" bg-white">
-      <div className="h-screen p-10 w-[100%] bg-[#2a9d8f] flex">
+      <div className="h-screen p-10 w-[100%] bg-[#2a9d8f] flex justify-center items-center">
         <MuiCard data={data} />
       </div>
     </div>

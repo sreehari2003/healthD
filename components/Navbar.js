@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const Navbar = () => {
+const Navbar = ({ mounted, setMounted }) => {
   const img =
     "https://images.unsplash.com/photo-1644982647708-0b2cc3d910b7?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774";
   return (
@@ -18,6 +18,9 @@ const Navbar = () => {
           className="rounded-full cursor-pointer "
           width={50}
           height={50}
+          onClick={() => {
+            setMounted(true);
+          }}
         />
       </div>
     </div>

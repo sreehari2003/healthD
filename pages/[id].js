@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import User from "../components/User";
-const index = () => {
+import AuthContext from "../context/authContext";
+import { useRouter } from "next/router";
+const Index = () => {
+  const ctx = useContext(AuthContext);
+  useEffect(() => {
+    if (!ctx.auth) {
+      router.push("/");
+    }
+    console.log(ctx.auth);
+  }, [ctx.auth]);
+  const router = useRouter();
+
   const DUMMETDATA = [
     {
       title: "cold",
@@ -24,4 +35,4 @@ const index = () => {
   return <User data={DUMMETDATA} />;
 };
 
-export default index;
+export default Index;
