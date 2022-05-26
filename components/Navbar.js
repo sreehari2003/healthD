@@ -7,12 +7,9 @@ const Navbar = () => {
   return (
     <div className="w-[100%] bg-black h-20 flex items-center justify-between p-10">
       <div className="flex justify-center items-cecnter">
-        <h2 className="text-xl text-white font-sans cursor-pointer">HealthD</h2>
-        <ul className="">
-          <li className="text-white  cursor-pointer pl-6">Profile</li>
-          <li className="text-white"></li>
-          <li></li>
-        </ul>
+        <h2 className="text-[40px] text-white font-serif cursor-pointer">
+          HealthD
+        </h2>
       </div>
       <div>
         <Image

@@ -5,30 +5,11 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { authentication } from "../auth/Firebase";
 import { notifyMessage } from "../helper/toast";
 import { useRouter } from "next/router";
-import axios from "axios";
-const Login = ({ URL, tex, route, ima }) => {
+const Login = ({ tex, ima, fun }) => {
   const google = "https://blog.hubspot.com/hubfs/image8-2.jpg";
-
-  const POST_URL = URL;
   const router = useRouter();
   const rt = tex.includes("Doctor") ? "patient" : "doctor";
   const nav = tex.includes("Doctor") ? "/" : "doctor";
-  const sendDB = async (obj) => {
-    try {
-      const { data } = await axios.post(POST_URL, obj, {
-        withCredentials: true,
-      });
-      notifyMessage("sign in succesfull");
-      router.push(`/${route}`);
-      if (!data) {
-        throw new Error("COuldnt sign in");
-        // notifyMessage("couldnt sign in");
-      }
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const auth = () => {
     //fiebase login code
@@ -49,7 +30,7 @@ const Login = ({ URL, tex, route, ima }) => {
         };
         localStorage.setItem("name", data.displayName);
         localStorage.setItem("email", data.email);
-        sendDB(query);
+        fun(query);
       } catch (e) {
         console.log(e);
         notifyMessage("Couldn't sign in");
@@ -83,10 +64,10 @@ const Login = ({ URL, tex, route, ima }) => {
               />
               <Button
                 variant="contained"
-                className="bg-black w-[200px] h-[50px] mt-4"
+                className="bg-black w-[300px] h-[50px] mt-4"
                 onClick={auth}
               >
-                Signup with Google
+                Continue with Google
               </Button>
               <h5
                 className="text-sm underline hover:cursor-pointer mt-3 "
