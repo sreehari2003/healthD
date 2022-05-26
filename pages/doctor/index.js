@@ -2,11 +2,14 @@ import React from "react";
 import Login from "../../components/Login";
 import axios from "axios";
 import { notifyMessage } from "../../helper/toast";
-const index = () => {
+import { useRouter } from "next/router";
+const Index = () => {
+  const routes = useRouter();
   const sendDR = async (obj) => {
     try {
-      await axios.post("http://localhost:3000/api/doc", obj);
+      await axios.post("http://localhost:3000/api/med/doc", obj);
       notifyMessage("account was created");
+      routes.push("/doctor/dashBoard");
     } catch (e) {
       notifyMessage("error creating account");
     }
@@ -16,4 +19,4 @@ const index = () => {
   return <Login fun={sendDR} tex={"sign in as Doctor"} ima={img} />;
 };
 
-export default index;
+export default Index;
