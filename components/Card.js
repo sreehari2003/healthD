@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import styles from "./card.module.scss";
 import { useRouter } from "next/router";
 const Card = ({ data }) => {
-  console.log(data);
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 4000);
+    }, 2000);
   }, []);
-  const [loading, setLoading] = useState(true);
   if (loading) {
     return (
       <>
@@ -47,26 +46,22 @@ const Card = ({ data }) => {
   return (
     <>
       {data?.map((el, index) => {
-        const dateObj = new Date(el.date);
-        // const date = moment(dateObj).format("DD-MMM-YYYY");
         return (
-          <div className={`${styles.box} bg-black`} key={10}>
-            <Image
-              src={`https://source.unsplash.com/random/${index * 10}`}
-              width={300}
-              height={450}
-              key={10}
-              alt={"a pic of diary"}
-              className={styles.img}
-            />
+          <div
+            className="rounded-[15px] m-5 p-[20px] flex justify-center flex-col h-[250px] bg-[#8e9aaf] w-[500px]"
+            key={10}
+          >
             <div className={styles.box_sub}>
-              <h2>{el.title}</h2>
-              <h2>{el.date}</h2>
+              <h1 className="text-2xl ">{el.date}</h1>
+              <p className="text-lg">
+                lorem ipsum dolor sit amet, consectetur adip lorem ipsum dolor
+                sit amet, consectetur adip
+              </p>
             </div>
             <div className={styles.info}>
               <Button
                 variant="contained"
-                onClick={() => route("/user/index")}
+                onClick={() => router.push("/user/index")}
                 className={styles.btn}
               >
                 show Data

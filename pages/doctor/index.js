@@ -8,7 +8,7 @@ const Index = () => {
   const sendDR = async (obj) => {
     try {
       await axios.post("http://localhost:3000/api/med/doc", obj);
-      notifyMessage("account was created");
+      notifyMessage("You were logged in");
       routes.push("/doctor/dashBoard");
     } catch (e) {
       notifyMessage("error creating account");

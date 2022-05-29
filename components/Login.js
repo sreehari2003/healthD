@@ -40,12 +40,12 @@ const Login = ({ tex, ima, fun }) => {
   };
 
   return (
-    <div className="h-screen bg-white flex overflow-hidden">
-      <div className="w-[50%] bg-black flex items-center justify-center">
+    <div className="h-screen bg-black flex overflow-hidden">
+      <div className="w-[50%] bg-black flex items-center justify-center h-[600px]">
         <Image
           src={ima}
           alt=""
-          height={722}
+          height={600}
           width={600}
           className="rounded-lg"
         />
