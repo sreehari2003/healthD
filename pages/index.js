@@ -1,17 +1,24 @@
-import react from "react";
+import react, { useContext, useEffect } from "react";
 import axios from "axios";
 import Login from "../components/Login";
 import { useRouter } from "next/router";
 import { notifyMessage } from "../helper/toast";
-
+import AuthContext from "../context/authContext";
 const Index = () => {
   const router = useRouter();
-  const POST_URL = "http://localhost:3000/api/users";
+  const { auth } = useContext(AuthContext);
+  useEffect(() => {
+    if (!auth) {
+      router.push("/");
+    }
+  }, [auth]);
+
+  const POST_URL = "http://localhost:3000/api/user/users";
   const sendDB = async (obj) => {
     try {
       const { data } = await axios.post(POST_URL, obj);
       notifyMessage("sign in succesfull");
-      router.push(`/${obj.name}`);
+      router.push(`/sreehari_jayaraj`);
       if (!data) {
         throw new Error("COuldnt sign in");
         // notifyMessage("couldnt sign in");

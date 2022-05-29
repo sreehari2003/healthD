@@ -5,6 +5,7 @@ const AuthContext = createContext({
   removeAuth: () => {},
   getAuth: () => {},
   setModal: () => {},
+  setCurrentUser: () => {},
   removeModal: () => {},
 });
 
@@ -12,6 +13,7 @@ export const AuthContextProvider = (props) => {
   const router = useRouter();
   const [auth, setAuth] = useState(false);
   const [modal, showModal] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     let cook = localStorage.getItem("email");
@@ -36,6 +38,9 @@ export const AuthContextProvider = (props) => {
   const removeModal = () => {
     showModal(false);
   };
+  const setCurrentUser = (user) => {
+    setUser(user);
+  };
 
   const contextValue = {
     auth,
@@ -44,6 +49,8 @@ export const AuthContextProvider = (props) => {
     setModal,
     removeModal,
     modal,
+    setCurrentUser,
+    user,
   };
 
   return (

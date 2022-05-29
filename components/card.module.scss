@@ -38,9 +38,10 @@
     border-radius: 8px !important;
   }
   .box_sub {
-    color: #48abe4;
+    color: black;
     display: flex;
     align-items: center;
+    flex-direction: column;
     height: 90px;
     //   color: black;
     justify-content: space-between;
@@ -63,4 +64,6 @@
   }
   .btn{
     padding:4px 50px !important;
+    background-color: black !important;
+    color:rgb(197, 189, 189) !important;
   }
